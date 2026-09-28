@@ -61,17 +61,17 @@
         <div class="local-toolbar">
           <button class="local-tool" type="button" id="refreshKits"><span class="ico">↻</span>Обновить</button>
           <button class="local-tool" type="button" id="addDocument"><span class="ico">⊕</span>Добавить документ</button>
-          <button class="local-tool" type="button" id="addVariant"><span class="ico">⊕</span>Добавить вариант</button>
+          <button class="local-tool" type="button" id="addVariant"><span class="ico">⊕</span>Добавить комплект</button>
           <button class="local-tool" type="button" id="deleteSelected" disabled><span class="ico">▥</span>Удалить</button>
         </div>
-        <div class="operator-note"><span><strong>И</strong> - все документы варианта обязательны. <strong>ИЛИ</strong> - достаточно одного полного варианта.</span><span class="formula" id="formula"></span></div>
+        <div class="operator-note"><span><strong>И</strong> - все документы комплекта обязательны. <strong>ИЛИ</strong> - достаточно одного полного комплекта.</span><span class="formula" id="formula"></span></div>
         <div class="grid-wrap">
           <table class="data-grid record-grid">
-            <thead><tr><th class="c-select"><span class="sort">↑</span></th><th class="c-var">Вариант комплекта *</th><th class="c-num">№ *</th><th class="c-type">Виды документов *</th><th class="c-sub">Подвиды документов *</th></tr></thead>
+            <thead><tr><th class="c-select"><span class="sort">↑</span></th><th class="c-var">Комплект *</th><th class="c-num">№ *</th><th class="c-type">Виды документов *</th><th class="c-sub">Подвиды документов *</th></tr></thead>
             <tbody id="documentRows"></tbody>
           </table>
         </div>
-        <div class="statusbar"><span id="documentCount"></span><span>Порядок вариантов определяется автоматически</span></div>
+        <div class="statusbar"><span id="documentCount"></span><span>Порядок комплектов определяется автоматически</span></div>
       </section>
       <section id="detailsPanel" class="tab-panel hidden">
         <div class="local-toolbar"><button class="local-tool" type="button"><span class="ico">↻</span>Обновить</button></div>
@@ -95,7 +95,7 @@
   <div class="modal-title">Добавление документа в комплект</div>
   <form id="documentForm">
     <div class="modal-body"><div class="form-grid">
-      <label for="variantSelect">Вариант комплекта <span class="req">*</span></label><select id="variantSelect"></select>
+      <label for="variantSelect">Комплект <span class="req">*</span></label><select id="variantSelect"></select>
       <label for="documentNumber">№ <span class="req">*</span></label><input id="documentNumber" inputmode="numeric" required>
       <label for="documentType">Вид документа <span class="req">*</span></label><select id="documentType"><option>Получение БПК (ФЛ)</option><option>Открытие банковского счета (ФЛ)</option><option>Открытие счета с выдачей БПК</option></select>
       <label for="documentSubtype">Подвид документа <span class="req">*</span></label><select id="documentSubtype"><option>Заявление на получение личной дебетовой БПК</option><option>Чек, подтверждающий успешное завершение операции</option><option>Заявление на открытие ТС и получение личной дебетовой БПК</option><option>Договор на открытие текущего счета</option></select>
@@ -134,12 +134,12 @@
   function renderDocuments(){
     let html="";variants.forEach((v,vi)=>{
       if(vi)html+=`<tr class="or-row"><td colspan="5">ИЛИ</td></tr>`;
-      html+=`<tr class="variant-head${vi===0?" primary":""}"><td colspan="5"><span class="variant-label">Вариант ${vi+1}<span class="variant-badge">${vi===0?"Основной":"Альтернативный"}</span></span><span class="variant-actions"><button class="tiny add-to-variant" data-v="${vi}" type="button">⊕ документ</button><button class="tiny remove-variant" data-v="${vi}" type="button" ${variants.length===1?"disabled":""}>▥ удалить вариант</button></span></td></tr>`;
+      html+=`<tr class="variant-head"><td colspan="5"><span class="variant-label">Комплект ${vi+1}</span><span class="variant-actions"><button class="tiny add-to-variant" data-v="${vi}" type="button">⊕ документ</button><button class="tiny remove-variant" data-v="${vi}" type="button" ${variants.length===1?"disabled":""}>▥ удалить комплект</button></span></td></tr>`;
       if(!v.docs.length)html+=`<tr class="empty-row"><td colspan="5">Добавьте хотя бы один документ</td></tr>`;
-      v.docs.forEach((d,di)=>{if(di)html+=`<tr class="logic-row"><td colspan="5"><span class="logic-line">И</span></td></tr>`;const selected=selectedDoc&&selectedDoc.v===vi&&selectedDoc.d===di;html+=`<tr class="data-row${selected?" selected-doc":""}" data-doc-v="${vi}" data-doc-d="${di}"><td><span class="checkbox${selected?" checked":""}"></span></td><td>Вариант ${vi+1}</td><td>${d.id}</td><td title="${esc(d.type)}">${esc(d.type)}</td><td title="${esc(d.subtype)}">${esc(d.subtype)}</td></tr>`;});
+      v.docs.forEach((d,di)=>{if(di)html+=`<tr class="logic-row"><td colspan="5"><span class="logic-line">И</span></td></tr>`;const selected=selectedDoc&&selectedDoc.v===vi&&selectedDoc.d===di;html+=`<tr class="data-row${selected?" selected-doc":""}" data-doc-v="${vi}" data-doc-d="${di}"><td><span class="checkbox${selected?" checked":""}"></span></td><td>Комплект ${vi+1}</td><td>${d.id}</td><td title="${esc(d.type)}">${esc(d.type)}</td><td title="${esc(d.subtype)}">${esc(d.subtype)}</td></tr>`;});
     });
-    $("documentRows").innerHTML=html;const count=variants.reduce((n,v)=>n+v.docs.length,0);$("documentCount").textContent=`Вариантов: ${variants.length}. Документов: ${count}`;
-    $("formula").textContent=variants.map((v,i)=>`В${i+1}: ${v.docs.length} док.`).join(" ИЛИ ");
+    $("documentRows").innerHTML=html;const count=variants.reduce((n,v)=>n+v.docs.length,0);$("documentCount").textContent=`Комплектов: ${variants.length}. Документов: ${count}`;
+    $("formula").textContent=variants.map((v,i)=>`К${i+1}: ${v.docs.length} док.`).join(" ИЛИ ");
     document.querySelectorAll("[data-doc-v]").forEach(row=>row.addEventListener("click",()=>{selectedDoc={v:Number(row.dataset.docV),d:Number(row.dataset.docD)};renderDocuments();}));
     document.querySelectorAll(".add-to-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();openDocument(Number(b.dataset.v));}));
     document.querySelectorAll(".remove-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();if(variants.length>1)confirmRemoveVariant(Number(b.dataset.v));}));
@@ -147,17 +147,17 @@
   }
   function setTab(name){document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));["details","kits","users"].forEach(x=>$(x+"Panel").classList.toggle("hidden",x!==name));}
   function markDirty(){$("globalSave").disabled=false;}
-  function fillVariantSelect(selected){$("variantSelect").innerHTML=variants.map((v,i)=>`<option value="${i}"${i===selected?" selected":""}>Вариант ${i+1} - ${i===0?"Основной":"Альтернативный"}</option>`).join("");}
+  function fillVariantSelect(selected){$("variantSelect").innerHTML=variants.map((v,i)=>`<option value="${i}"${i===selected?" selected":""}>Комплект ${i+1}</option>`).join("");}
   function openDocument(v=0){fillVariantSelect(v);$("documentNumber").value=Math.max(0,...variants.flatMap(x=>x.docs.map(d=>d.id)))+1;$("documentDialog").showModal();}
-  function confirmRemoveVariant(index){pendingAction=()=>{variants.splice(index,1);selectedDoc=null;renderDocuments();markDirty();notify("Вариант удален","Оставшиеся варианты перенумерованы без пропусков.");};$("confirmTitle").textContent="Удаление варианта";$("confirmText").innerHTML=`Удалить вариант ${index+1} со всеми входящими документами?<br><br>Оставшиеся варианты будут перенумерованы автоматически.`;$("confirmDialog").showModal();}
+  function confirmRemoveVariant(index){pendingAction=()=>{variants.splice(index,1);selectedDoc=null;renderDocuments();markDirty();notify("Комплект удален","Оставшиеся комплекты перенумерованы без пропусков.");};$("confirmTitle").textContent="Удаление комплекта";$("confirmText").innerHTML=`Удалить комплект ${index+1} со всеми входящими документами?<br><br>Оставшиеся комплекты будут перенумерованы автоматически.`;$("confirmDialog").showModal();}
   function notify(title,text){clearTimeout(messageTimer);$("messageTitle").textContent=title;$("messageText").textContent=text;$("message").classList.remove("hidden");messageTimer=setTimeout(()=>$("message").classList.add("hidden"),4500);}
   document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setTab(t.dataset.tab)));
   $("addDocument").addEventListener("click",()=>openDocument(0));
-  $("addVariant").addEventListener("click",()=>{variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Вариант добавлен",`Создан вариант ${variants.length}. Добавьте в него полный комплект документов.`);});
-  $("deleteSelected").addEventListener("click",()=>{if(!selectedDoc)return;pendingAction=()=>{variants[selectedDoc.v].docs.splice(selectedDoc.d,1);selectedDoc=null;renderDocuments();markDirty();notify("Документ удален","Состав варианта изменен.");};$("confirmTitle").textContent="Удаление документа";$("confirmText").textContent="Удалить выбранный документ из варианта комплекта?";$("confirmDialog").showModal();});
-  $("documentForm").addEventListener("submit",e=>{e.preventDefault();const v=Number($("variantSelect").value);variants[v].docs.push({id:Number($("documentNumber").value),type:$("documentType").value,subtype:$("documentSubtype").value});$("documentDialog").close();renderDocuments();markDirty();notify("Документ добавлен",`Документ включен в вариант ${v+1}.`);});
+  $("addVariant").addEventListener("click",()=>{variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Комплект добавлен",`Создан комплект ${variants.length}. Добавьте в него полный набор документов.`);});
+  $("deleteSelected").addEventListener("click",()=>{if(!selectedDoc)return;pendingAction=()=>{variants[selectedDoc.v].docs.splice(selectedDoc.d,1);selectedDoc=null;renderDocuments();markDirty();notify("Документ удален","Состав комплекта изменен.");};$("confirmTitle").textContent="Удаление документа";$("confirmText").textContent="Удалить выбранный документ из комплекта?";$("confirmDialog").showModal();});
+  $("documentForm").addEventListener("submit",e=>{e.preventDefault();const v=Number($("variantSelect").value);variants[v].docs.push({id:Number($("documentNumber").value),type:$("documentType").value,subtype:$("documentSubtype").value});$("documentDialog").close();renderDocuments();markDirty();notify("Документ добавлен",`Документ включен в комплект ${v+1}.`);});
   $("cancelDocument").addEventListener("click",()=>$("documentDialog").close());$("cancelConfirm").addEventListener("click",()=>{pendingAction=null;$("confirmDialog").close();});$("acceptConfirm").addEventListener("click",()=>{const a=pendingAction;pendingAction=null;$("confirmDialog").close();if(a)a();});
-  $("globalSave").addEventListener("click",()=>{if(variants.some(v=>!v.docs.length)){notify("Настройки не сохранены","Каждый вариант должен содержать полный комплект документов.");return;}$("globalSave").disabled=true;notify("Настройки сохранены","Новые и повторные проверки будут использовать текущий порядок вариантов.");});
+  $("globalSave").addEventListener("click",()=>{if(variants.some(v=>!v.docs.length)){notify("Настройки не сохранены","Каждый комплект должен содержать хотя бы один документ.");return;}$("globalSave").disabled=true;notify("Настройки сохранены","Новые и повторные проверки будут использовать текущий порядок комплектов.");});
   $("refreshAll").addEventListener("click",()=>{variants=initialVariants();selectedDoc=null;renderDocuments();$("globalSave").disabled=true;notify("Данные обновлены","Восстановлен исходный демонстрационный состав.");});$("refreshKits").addEventListener("click",()=>{variants=initialVariants();selectedDoc=null;renderDocuments();$("globalSave").disabled=true;});
   $("closeMessage").addEventListener("click",()=>$("message").classList.add("hidden"));
   renderProducts();renderDetails();renderDocuments();setTimeout(()=>{const row=document.querySelector('[data-product="34"]');if(row)row.scrollIntoView({block:"center"});},50);
