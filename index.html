@@ -64,7 +64,7 @@
           <button class="local-tool" type="button" id="addVariant"><span class="ico">⊕</span>Добавить комплект</button>
           <button class="local-tool" type="button" id="deleteSelected" disabled><span class="ico">▥</span>Удалить</button>
         </div>
-        <div class="operator-note"><span><strong>И</strong> - все документы комплекта обязательны. <strong>ИЛИ</strong> - достаточно одного полного комплекта.</span><span class="formula" id="formula"></span></div>
+        <div class="operator-note"><span><strong>И</strong> - все документы комплекта обязательны. <strong>ИЛИ</strong> - достаточно одного полного комплекта.</span></div>
         <div class="grid-wrap">
           <table class="data-grid record-grid">
             <thead><tr><th class="c-select"><span class="sort">↑</span></th><th class="c-var">Комплект *</th><th class="c-num">№ *</th><th class="c-type">Виды документов *</th><th class="c-sub">Подвиды документов *</th></tr></thead>
@@ -139,7 +139,7 @@
     });
     if(!variants.length)html=`<tr class="empty-row"><td colspan="5">Комплекты документов не настроены. При добавлении документа будет автоматически создан Комплект 1.</td></tr>`;
     $("documentRows").innerHTML=html;const count=variants.reduce((n,v)=>n+v.docs.length,0);$("documentCount").textContent=`Комплектов: ${variants.length}. Документов: ${count}`;
-    $("formula").textContent=variants.map((v,i)=>`К${i+1}: ${v.docs.length} док.`).join(" ИЛИ ");
+    $("addVariant").disabled=variants.length>=5;
     document.querySelectorAll("[data-doc-v]").forEach(row=>row.addEventListener("click",()=>{selectedDoc={v:Number(row.dataset.docV),d:Number(row.dataset.docD)};renderDocuments();}));
     document.querySelectorAll(".add-to-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();openDocument(Number(b.dataset.v));}));
     document.querySelectorAll(".remove-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();confirmRemoveVariant(Number(b.dataset.v));}));
@@ -153,7 +153,7 @@
   function notify(title,text){clearTimeout(messageTimer);$("messageTitle").textContent=title;$("messageText").textContent=text;$("message").classList.remove("hidden");messageTimer=setTimeout(()=>$("message").classList.add("hidden"),4500);}
   document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setTab(t.dataset.tab)));
   $("addDocument").addEventListener("click",()=>openDocument(0));
-  $("addVariant").addEventListener("click",()=>{variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Комплект добавлен",`Создан комплект ${variants.length}. Добавьте в него полный набор документов.`);});
+  $("addVariant").addEventListener("click",()=>{if(variants.length>=5){notify("Комплект не добавлен","Достигнуто максимальное количество комплектов: 5.");return;}variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Комплект добавлен",`Создан комплект ${variants.length}. Добавьте в него полный набор документов.`);});
   $("deleteSelected").addEventListener("click",()=>{if(!selectedDoc)return;pendingAction=()=>{variants[selectedDoc.v].docs.splice(selectedDoc.d,1);selectedDoc=null;renderDocuments();markDirty();notify("Документ удален","Состав комплекта изменен.");};$("confirmTitle").textContent="Удаление документа";$("confirmText").textContent="Удалить выбранный документ из комплекта?";$("confirmDialog").showModal();});
   $("documentForm").addEventListener("submit",e=>{e.preventDefault();const v=Number($("variantSelect").value);if(!variants.length)variants.push({docs:[]});const nextNumber=Math.max(0,...variants.flatMap(x=>x.docs.map(d=>d.id)))+1;variants[v].docs.push({id:nextNumber,type:$("documentType").value,subtype:$("documentSubtype").value});$("documentDialog").close();renderDocuments();markDirty();notify("Документ добавлен",`Документ включен в комплект ${v+1}.`);});
   $("cancelDocument").addEventListener("click",()=>$("documentDialog").close());$("cancelConfirm").addEventListener("click",()=>{pendingAction=null;$("confirmDialog").close();});$("acceptConfirm").addEventListener("click",()=>{const a=pendingAction;pendingAction=null;$("confirmDialog").close();if(a)a();});
