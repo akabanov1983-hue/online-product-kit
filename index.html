@@ -33,6 +33,7 @@
     <div class="right-tools"><button type="button" aria-label="Помощь">?</button><button type="button" aria-label="Профиль">●⌄</button></div>
   </header>
   <div class="global-toolbar">
+<button class="tool" id="exportConfig" type="button">Экспорт</button><button class="tool" id="importConfig" type="button">Импорт</button><input id="configFile" type="file" accept="application/json,.json" hidden>
     <button class="tool" type="button" id="refreshAll"><span class="ico">↻</span>Обновить</button>
     <button class="tool" type="button"><span class="ico">⊕</span>Добавить</button>
     <button class="tool" type="button"><span class="ico">▥</span>Удалить</button>
@@ -127,7 +128,7 @@
   function renderProducts(){
     $("productRows").innerHTML=products.map(p=>`<tr class="data-row${p[0]===selectedProductId?" selected":""}" data-product="${p[0]}"><td><span class="checkbox main-checkbox"></span></td><td>${p[0]}</td><td title="${esc(p[1])}">${esc(p[1])}</td><td title="${esc(p[2])}">${esc(p[2])}</td></tr>`).join("");
     $("productCount").textContent=`Показано ${products.length} записей`;
-    document.querySelectorAll("[data-product]").forEach(row=>row.addEventListener("click",()=>{selectedProductId=Number(row.dataset.product);selectedDoc=null;renderProducts();renderDetails();renderDocuments();}));
+    document.querySelectorAll("[data-product]").forEach(row=>row.addEventListener("click",()=>{configurations.set(selectedProductId,JSON.parse(JSON.stringify(variants)));selectedProductId=Number(row.dataset.product);variants=JSON.parse(JSON.stringify(configurations.get(selectedProductId)));selectedDoc=null;renderProducts();renderDetails();renderDocuments();}));
   }
   function renderDetails(){const p=currentProduct();$("detailId").textContent=p[0];$("detailName").textContent=p[1];$("detailDescription").textContent=p[3];$("detailCode").textContent=p[2];$("detailDossier").textContent=p[4];}
   function renderDocuments(){
@@ -139,7 +140,7 @@
     });
     if(!variants.length)html=`<tr class="empty-row"><td colspan="5">Комплекты документов не настроены. При добавлении документа будет автоматически создан Комплект 1.</td></tr>`;
     $("documentRows").innerHTML=html;const count=variants.reduce((n,v)=>n+v.docs.length,0);$("documentCount").textContent=`Комплектов: ${variants.length}. Документов: ${count}`;
-    $("addVariant").disabled=variants.length>=5;
+    $("addVariant").disabled=variants.length>=10;
     document.querySelectorAll("[data-doc-v]").forEach(row=>row.addEventListener("click",()=>{selectedDoc={v:Number(row.dataset.docV),d:Number(row.dataset.docD)};renderDocuments();}));
     document.querySelectorAll(".add-to-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();openDocument(Number(b.dataset.v));}));
     document.querySelectorAll(".remove-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();confirmRemoveVariant(Number(b.dataset.v));}));
@@ -155,13 +156,32 @@
   function notify(title,text){clearTimeout(messageTimer);$("messageTitle").textContent=title;$("messageText").textContent=text;$("message").classList.remove("hidden");messageTimer=setTimeout(()=>$("message").classList.add("hidden"),4500);}
   document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setTab(t.dataset.tab)));
   $("addDocument").addEventListener("click",()=>openDocument(0));
-  $("addVariant").addEventListener("click",()=>{if(variants.length>=5){notify("Комплект не добавлен","Достигнуто максимальное количество комплектов: 5.");return;}variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Комплект добавлен",`Создан комплект ${variants.length}. Добавьте в него полный набор документов.`);});
+  $("addVariant").addEventListener("click",()=>{if(variants.length>=10){notify("Комплект не добавлен","Достигнуто максимальное количество комплектов: 10.");return;}variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Комплект добавлен",`Создан комплект ${variants.length}. Добавьте в него полный набор документов.`);});
   $("deleteSelected").addEventListener("click",()=>{if(!selectedDoc)return;pendingAction=()=>{variants[selectedDoc.v].docs.splice(selectedDoc.d,1);selectedDoc=null;renderDocuments();markDirty();notify("Документ удален","Состав комплекта изменен.");};$("confirmTitle").textContent="Удаление документа";$("confirmText").textContent="Удалить выбранный документ из комплекта?";$("confirmDialog").showModal();});
   $("documentForm").addEventListener("submit",e=>{e.preventDefault();const v=Number($("variantSelect").value);if(!variants.length)variants.push({docs:[]});const type=$("documentType").value,subtype=$("documentSubtype").value;if(variants[v].docs.some(d=>d.type===type&&d.subtype===subtype)){$("documentType").classList.add("field-error");$("documentSubtype").classList.add("field-error");notify("Документ не добавлен","В выбранном комплекте уже есть документ с такими видом и подвидом.");return;}const nextNumber=Math.max(0,...variants.flatMap(x=>x.docs.map(d=>d.id)))+1;variants[v].docs.push({id:nextNumber,type,subtype});$("documentDialog").close();renderDocuments();markDirty();notify("Документ добавлен",`Документ включен в комплект ${v+1}.`);});
   $("cancelDocument").addEventListener("click",()=>$("documentDialog").close());$("cancelConfirm").addEventListener("click",()=>{pendingAction=null;$("confirmDialog").close();});$("acceptConfirm").addEventListener("click",()=>{const a=pendingAction;pendingAction=null;$("confirmDialog").close();if(a)a();});
   $("globalSave").addEventListener("click",()=>{if(variants.some(v=>!v.docs.length)){notify("Настройки не сохранены","Каждый комплект должен содержать хотя бы один документ.");return;}if(hasDuplicateDocuments()){notify("Настройки не сохранены","В одном комплекте не должно быть документов с одинаковыми видом и подвидом.");return;}$("globalSave").disabled=true;notify("Настройки сохранены","Новые и повторные проверки будут использовать текущий порядок комплектов.");});
   $("refreshAll").addEventListener("click",()=>{variants=initialVariants();selectedDoc=null;renderDocuments();$("globalSave").disabled=true;notify("Данные обновлены","Восстановлен исходный демонстрационный состав.");});$("refreshKits").addEventListener("click",()=>{variants=initialVariants();selectedDoc=null;renderDocuments();$("globalSave").disabled=true;});
   $("closeMessage").addEventListener("click",()=>$("message").classList.add("hidden"));
+
+  const configurations=new Map(products.map(p=>[p[0],initialVariants()]));
+  function validateConfig(data){
+    if(data?.format!=="gedk-online-products"||data.version!==1||!Array.isArray(data.products))throw Error("Неверный формат файла конфигурации.");
+    const ids=new Set();
+    for(const p of data.products){
+      if(!products.some(x=>x[0]===p.id&&x[2]===p.code)||ids.has(p.id))throw Error("Неизвестный или повторяющийся онлайн-продукт.");ids.add(p.id);
+      if(!Array.isArray(p.kits)||p.kits.length>10)throw Error("Допускается от нуля до десяти комплектов.");
+      for(const kit of p.kits){if(!Array.isArray(kit.docs)||!kit.docs.length)throw Error("Комплект не содержит документов.");const seen=new Set();for(const d of kit.docs){if(typeof d.type!=="string"||!d.type.trim()||typeof d.subtype!=="string"||!d.subtype.trim()||!Number.isInteger(d.id)||d.id<1)throw Error("Не заполнены поля документа.");const key=JSON.stringify([d.type,d.subtype]);if(seen.has(key))throw Error("Документ повторяется внутри комплекта.");seen.add(key);}}
+    }return data;
+  }
+  $("exportConfig").addEventListener("click",()=>{
+    configurations.set(selectedProductId,JSON.parse(JSON.stringify(variants)));
+    const data={format:"gedk-online-products",version:1,products:products.map(p=>({id:p[0],code:p[2],name:p[1],description:p[3],dossier:p[4],kits:configurations.get(p[0])}))};
+    try{validateConfig(data);}catch(e){notify("Экспорт не выполнен",e.message);return;}
+    const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="online-products-config.json";a.click();URL.revokeObjectURL(url);notify("Конфигурация экспортирована","Файл можно импортировать в другой экземпляр прототипа.");
+  });
+  $("importConfig").addEventListener("click",()=>$("configFile").click());
+  $("configFile").addEventListener("change",async()=>{const file=$("configFile").files?.[0];if(!file)return;try{const data=validateConfig(JSON.parse(await file.text()));pendingAction=()=>{data.products.forEach(p=>configurations.set(p.id,JSON.parse(JSON.stringify(p.kits))));variants=JSON.parse(JSON.stringify(configurations.get(selectedProductId)));selectedDoc=null;renderDocuments();markDirty();notify("Конфигурация импортирована","Настройки продуктов из файла загружены. Нажмите Сохранить.");};$("confirmTitle").textContent="Импорт конфигурации";$("confirmText").textContent="Заменить настройки продуктов, перечисленных в файле?";$("confirmDialog").showModal();}catch(e){notify("Импорт не выполнен",e.message);}finally{$("configFile").value="";}});
   renderProducts();renderDetails();renderDocuments();setTimeout(()=>{const row=document.querySelector('[data-product="34"]');if(row)row.scrollIntoView({block:"center"});},50);
 })();
 </script>
