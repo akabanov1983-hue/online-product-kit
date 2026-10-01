@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Онлайн-продукты - ГЭДК</title>
+  <title>UC-89. Онлайн-продукты — ГЭДК</title>
   <style>
     :root{--ink:#414141;--muted:#858585;--line:#d8d8d8;--line2:#ececec;--panel:#a7b5bd;--head:#eef0f1;--selected:#e7e7e7;--blue:#506b7d;--accent:#dcae00;--danger:#b83a36;--bg:#e8edef}
     *{box-sizing:border-box}html,body{height:100%}body{margin:0;color:var(--ink);font:14px/1.25 Roboto,Arial,sans-serif;background:linear-gradient(135deg,#e7eef0 0,#f7f7f7 42%,#dde7ea 100%);overflow:hidden}
@@ -16,6 +16,19 @@
     .statusbar{height:22px;border-top:1px solid #d6d6d6;background:#fafafa;display:flex;align-items:center;padding:0 8px;color:#777;font-size:11px}.statusbar span:last-child{margin-left:auto}.hidden{display:none!important}
     dialog{border:1px solid #7c898f;border-radius:0;padding:0;width:min(720px,92vw);box-shadow:0 12px 44px rgba(0,0,0,.38)}dialog::backdrop{background:rgba(28,39,43,.44)}.modal-title{height:39px;background:#a9b7bf;display:flex;align-items:center;padding:0 14px;font-weight:700;color:#111}.modal-body{padding:16px 19px;background:#fff}.form-grid{display:grid;grid-template-columns:190px 1fr;gap:11px 13px;align-items:center}.form-grid input,.form-grid select{height:34px;border:1px solid #aeb8bd;border-radius:0;padding:5px 8px;background:#fff}.form-grid .field-error{border-color:#b83a36;background:#fff4f3}.modal-actions{height:48px;border-top:1px solid #d3d3d3;background:#fafafa;display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 13px}.btn{border:1px solid #9aa6ac;border-radius:0;background:#fff;padding:7px 15px;cursor:pointer}.btn:hover{background:#edf0f1}.btn.primary{background:#718793;color:#fff;border-color:#627782}.message{position:fixed;right:20px;bottom:25px;background:#fff;border:1px solid #9ca8ae;border-left:5px solid #6a858f;box-shadow:0 5px 18px rgba(0,0,0,.23);padding:12px 38px 12px 13px;min-width:320px;z-index:20}.message strong{display:block}.message button{position:absolute;right:5px;top:5px;border:0;background:transparent}.confirm-text{line-height:1.5}
     @media(max-width:1250px){.menu{padding:0 9px;font-size:14px}.workspace{grid-template-columns:minmax(390px,43%) 12px minmax(510px,57%)}.pane-title{padding-left:20px}.operator-note .formula{display:none}}
+
+    .spec-link{font-size:12px;color:#3b5362;padding:0 12px;white-space:nowrap}
+    .save-feedback{padding:9px 16px;background:#fff9df;border-bottom:1px solid #e5d38a;line-height:1.4}
+    .save-feedback.invalid{background:#fff1ef;color:#8e2a26;border-bottom-color:#dfb9b6}
+    .kit-rule{padding:7px 11px;background:#f9fafb;border-bottom:1px solid var(--line);font-size:12px;line-height:1.4;color:#586770}
+    .draft-state{padding:8px 12px;background:#fff9df;border-bottom:1px solid #e5d38a;font-weight:700}
+    .new-product-help{margin:0 0 16px;line-height:1.5;color:#596778}
+    .form-grid{grid-template-columns:190px minmax(0,1fr)}.form-grid input,.form-grid select{min-width:0;width:100%}
+    .form-error{padding:10px 12px;margin:15px 0 0;background:#fff1ef;border-left:3px solid #b83a36;color:#8e2a26;line-height:1.4;overflow-wrap:anywhere}
+    .btn:disabled,.tiny:disabled{color:#bababa;background:#f5f5f5;cursor:default}.message.error{border-left-color:#b83a36}
+    dialog{max-height:90vh;overflow:auto}.tabs{flex-shrink:0}.details{overflow:auto}.local-toolbar{flex-shrink:0}
+    @media(max-width:1000px){body{overflow:auto}.app{min-width:0;min-height:100vh;height:auto}.workspace{display:flex;flex-direction:column;padding-top:6px}.left-pane{min-height:210px;max-height:280px}.right-pane{min-height:480px}.splitter{height:8px;flex-shrink:0}.global-toolbar{height:auto;min-height:34px;flex-wrap:wrap}.tool{min-height:34px}.right-tools{margin-right:5px}.spec-link{max-width:95px;white-space:normal}.menus .menu{font-size:12px;padding:0 6px}.logo{width:120px;padding:0 8px;font-size:20px}.tabs{height:auto;min-height:42px;flex-wrap:wrap;padding-left:5px;gap:3px}.tab{font-size:11px;padding:0 9px}.local-toolbar{height:auto;min-height:36px;flex-wrap:wrap}.local-tool{min-height:36px;font-size:12px;padding:0 8px}.form-grid{grid-template-columns:140px minmax(0,1fr)}.details{padding:16px}.operator-note{height:auto;min-height:36px;padding:7px 11px}.grid-wrap{min-height:170px}}
+
   </style>
 </head>
 <body>
@@ -30,16 +43,17 @@
       <button class="menu primary" type="button">Создать <span class="caret">▼</span></button>
     </nav>
     <span class="nav-fill"></span>
-    <div class="right-tools"><button type="button" aria-label="Помощь">?</button><button type="button" aria-label="Профиль">●⌄</button></div>
+    <div class="right-tools"><a class="spec-link" href="./UC-89_specification_v0.4.html" target="_blank" rel="noopener">Спецификация UC-89</a><button type="button" aria-label="Помощь">?</button><button type="button" aria-label="Профиль">●⌄</button></div>
   </header>
   <div class="global-toolbar">
 <button class="tool" id="exportConfig" type="button">Экспорт</button><button class="tool" id="importConfig" type="button">Импорт</button><input id="configFile" type="file" accept="application/json,.json" hidden>
     <button class="tool" type="button" id="refreshAll"><span class="ico">↻</span>Обновить</button>
-    <button class="tool" type="button"><span class="ico">⊕</span>Добавить</button>
-    <button class="tool" type="button"><span class="ico">▥</span>Удалить</button>
+    <button class="tool" type="button" id="addProduct"><span class="ico">⊕</span>Добавить продукт</button>
+    <button class="tool" type="button" id="discardChanges" disabled>Отменить изменения</button>
     <button class="tool" type="button" id="globalSave" disabled><span class="ico">▣</span>Сохранить</button>
     <button class="tool" type="button" disabled><span class="ico">⚙</span>Сформировать отчёт</button>
   </div>
+  <div class="save-feedback hidden" id="saveFeedback" role="status" aria-live="polite"></div>
   <main class="workspace">
     <section class="pane left-pane" aria-label="Онлайн-продукты">
       <div class="pane-title">Онлайн-продукты</div>
@@ -49,7 +63,7 @@
           <tbody id="productRows"></tbody>
         </table>
       </div>
-      <div class="statusbar"><span id="productCount"></span><span>Записей на странице: 48</span></div>
+      <div class="statusbar"><span id="productCount"></span><span>Демонстрационные данные</span></div>
     </section>
     <div class="splitter" aria-hidden="true"></div>
     <section class="pane right-pane" aria-label="Параметры продукта">
@@ -58,31 +72,44 @@
         <button class="tab active" type="button" data-tab="kits">Комплекты документов</button>
         <button class="tab" type="button" data-tab="users">Пользователи</button>
       </div>
+      <div class="draft-state hidden" id="draftLabel"></div>
       <section id="kitsPanel" class="tab-panel">
         <div class="local-toolbar">
           <button class="local-tool" type="button" id="refreshKits"><span class="ico">↻</span>Обновить</button>
           <button class="local-tool" type="button" id="addDocument"><span class="ico">⊕</span>Добавить документ</button>
           <button class="local-tool" type="button" id="addVariant"><span class="ico">⊕</span>Добавить комплект</button>
+          <button class="local-tool" type="button" id="editDocument" disabled>Изменить документ</button>
           <button class="local-tool" type="button" id="deleteSelected" disabled><span class="ico">▥</span>Удалить</button>
         </div>
-        <div class="operator-note"><span><strong>И</strong> - все документы комплекта обязательны. <strong>ИЛИ</strong> - достаточно одного полного комплекта.</span></div>
+        <div class="operator-note"><span><strong>И</strong> — все документы комплекта обязательны. <strong>ИЛИ</strong> — достаточно одного полного комплекта.</span></div>
+        <div class="kit-rule">От 1 до 10 комплектов. В каждом — хотя бы один документ. Подвид документа не повторяется в продукте.</div>
         <div class="grid-wrap">
           <table class="data-grid record-grid">
             <thead><tr><th class="c-select"><span class="sort">↑</span></th><th class="c-var">Комплект *</th><th class="c-num">№ *</th><th class="c-type">Виды документов *</th><th class="c-sub">Подвиды документов *</th></tr></thead>
             <tbody id="documentRows"></tbody>
           </table>
         </div>
-        <div class="statusbar"><span id="documentCount"></span><span>Порядок комплектов определяется автоматически</span></div>
+        <div class="statusbar"><span id="documentCount"></span><span id="kitLimit">Порядок комплектов определяется автоматически</span></div>
       </section>
       <section id="detailsPanel" class="tab-panel hidden">
         <div class="local-toolbar"><button class="local-tool" type="button"><span class="ico">↻</span>Обновить</button></div>
-        <div class="details">
+        <div class="details" id="productDetails">
           <div class="detail-row"><label>№ <span class="req">*</span>:</label><div class="value" id="detailId"></div></div>
           <div class="detail-row"><label>Наименование <span class="req">*</span>:</label><div class="value" id="detailName"></div></div>
           <div class="detail-row"><label>Описание:</label><div class="value" id="detailDescription"></div></div>
           <div class="detail-row"><label>Обозначение <span class="req">*</span>:</label><div class="value" id="detailCode"></div></div>
-          <div class="detail-row"><label>⌘ Вид досье <span class="req">*</span>:</label><div><div class="value" id="detailDossier"></div><div class="hint">наберите минимум 3 символа для фильтрации списка</div></div></div>
+          <div class="detail-row"><label>⌘ Вид досье <span class="req">*</span>:</label><div><div class="value" id="detailDossier"></div></div></div>
         </div>
+        <form id="newProductForm" class="details hidden" novalidate>
+          <p class="new-product-help">Заполните карточку и добавьте документ на вкладке «Комплекты документов». Продукт появится в справочнике после сохранения.</p>
+          <div class="form-grid">
+            <label>№</label><span id="newProductId"></span>
+            <label for="newProductName">Наименование <span class="req">*</span></label><input id="newProductName" required autocomplete="off">
+            <label for="newProductDescription">Описание</label><input id="newProductDescription" autocomplete="off">
+            <label for="newProductCode">Обозначение <span class="req">*</span></label><input id="newProductCode" required autocomplete="off">
+            <label for="newProductDossier">Вид досье <span class="req">*</span></label><select id="newProductDossier" required></select>
+          </div>
+        </form>
       </section>
       <section id="usersPanel" class="tab-panel hidden">
         <div class="local-toolbar"><button class="local-tool" type="button"><span class="ico">↻</span>Обновить</button><button class="local-tool" type="button"><span class="ico">⊕</span>Добавить</button><button class="local-tool" type="button" disabled><span class="ico">▥</span>Удалить</button></div>
@@ -92,19 +119,19 @@
   </main>
 </div>
 
-<dialog id="documentDialog">
-  <div class="modal-title">Добавление документа в комплект</div>
-  <form id="documentForm">
+<dialog id="documentDialog" aria-labelledby="documentDialogTitle">
+  <div class="modal-title" id="documentDialogTitle">Добавление документа в комплект</div>
+  <form id="documentForm" novalidate>
     <div class="modal-body"><div class="form-grid">
-      <label for="variantSelect">Комплект <span class="req">*</span></label><select id="variantSelect"></select>
-      <label for="documentType">Вид документа <span class="req">*</span></label><select id="documentType"><option>Получение БПК (ФЛ)</option><option>Открытие банковского счета (ФЛ)</option><option>Открытие счета с выдачей БПК</option></select>
-      <label for="documentSubtype">Подвид документа <span class="req">*</span></label><select id="documentSubtype"><option>Заявление на получение личной дебетовой БПК</option><option>Чек, подтверждающий успешное завершение операции</option><option>Заявление на открытие ТС и получение личной дебетовой БПК</option><option>Договор на открытие текущего счета</option></select>
-    </div></div>
-    <div class="modal-actions"><button class="btn" type="button" id="cancelDocument">Отмена</button><button class="btn primary" type="submit">Добавить</button></div>
+      <label for="variantSelect">Комплект <span class="req">*</span></label><select id="variantSelect" required></select>
+      <label for="documentType">Вид документа <span class="req">*</span></label><select id="documentType" required><option value="">Выберите вид документа</option></select>
+      <label for="documentSubtype">Подвид документа <span class="req">*</span></label><select id="documentSubtype" required disabled><option value="">Выберите подвид документа</option></select>
+    </div><p class="form-error hidden" id="documentError" role="alert"></p></div>
+    <div class="modal-actions"><button class="btn" type="button" id="cancelDocument">Отмена</button><button class="btn primary" type="submit" id="documentSubmit">Добавить</button></div>
   </form>
 </dialog>
 
-<dialog id="confirmDialog">
+<dialog id="confirmDialog" aria-labelledby="confirmTitle">
   <div class="modal-title" id="confirmTitle">Подтверждение</div>
   <div class="modal-body confirm-text" id="confirmText"></div>
   <div class="modal-actions"><button class="btn" type="button" id="cancelConfirm">Отмена</button><button class="btn primary" type="button" id="acceptConfirm">Продолжить</button></div>
@@ -114,75 +141,365 @@
 
 <script>
 (()=>{
-  "use strict";
-  const products=[
+"use strict";
+const seedProducts=[
     [4,"Онлайн-открытие банковского счета","B3","Базовый счет Пенсионный","Текущий счет"],[5,"Онлайн-открытие банковского счета с выпуском карты","BC","Яркая кредитка","Текущий счет"],[6,"Онлайн-открытие банковского счета","CB","A/C Individual","Текущий счет"],[7,"Онлайн-открытие банковского счета","B0","Базовый счет","Текущий счет"],[8,"Онлайн-открытие банковского счета","CE","A/C Individual","Текущий счет"],[9,"Онлайн-депозиты","ВИК","Депозит ФЛ Интернет-вклад фикс","Вклад (депозит)"],[10,"Онлайн-депозиты","ВИЗ","Депозит ФЛ Зручны анлайн фиксирован.","Вклад (депозит)"],[11,"Онлайн-депозиты","ВИО","Депозит ФЛ Интернет-вклад отзывной","Вклад (депозит)"],[20,"Выпуск банковской платежной карточки онлайн","PrvDbAAA027VIRT_TMC","Виртуальная карта","БПК"],[30,"Выпуск банковской платежной карточки онлайн","PrvDbAAA050PSPROSTO_TMC","ПУ Всё просто","БПК"],[31,"Выпуск банковской платежной карточки онлайн","PrvDbAAA051PSMAXFA_TMC","ПУ Всё по максимуму","БПК"],[32,"Выпуск банковской платежной карточки онлайн","PrvDbAAA051PSOPTIMAL_TMC","ПУ Всё оптимально","БПК"],[33,"Выпуск банковской платежной карточки онлайн","PrvDbAAA051PSPREMIUM_TMC","ПУ Всё по максимуму online","БПК"],[34,"Выпуск банковской платежной карточки онлайн","PrvDbAAA047PSMAX_TMC","ПУ Всё по максимуму","БПК"],[35,"Выпуск банковской платежной карточки онлайн","PrvDbAAA047PSMAXB_TMC","ПУ Всё по максимуму","БПК"],[36,"Выпуск банковской платежной карточки онлайн","PrvDbAAA047PSPREM_TMC","ПУ Всё по максимуму online","БПК"],[37,"Выпуск банковской платежной карточки онлайн","PrvDbAAA047PSPREMB_TMC","ПУ Всё по максимуму online","БПК"],[38,"Выпуск банковской платежной карточки онлайн","PrvDbAAA027PSBASEBFIB_TMC","ПУ Базовый","БПК"],[39,"Выпуск банковской платежной карточки онлайн","PrvDbAAA052SHINEIB_TMC","Карта Сияй","БПК"],[41,"Пакеты услуг физических лиц","50","ПУ Всё","Пакет услуг"],[42,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027GRNOVERIB_TMC","Зеленая карта","Текущий счет"],[43,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027ORNGOVERIB_TMC","Оранжевая карта","Текущий счет"],[44,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027PINKOVERIB_TMC","Розовая карта","Текущий счет"],[45,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027YELOVERIB_TMC","Желтая карта","Текущий счет"],[46,"Онлайн-открытие банковского счета с выпуском карты","CB","A/C Individual","Текущий счет"],[47,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA050PSPROSTO_TMC","ПУ Всё просто","БПК"],[48,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA051PSMAXFA_TMC","ПУ Всё по максимуму","БПК"],[49,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA051PSOPTIMAL_TMC","ПУ Всё оптимально","БПК"],[50,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA051PSPREMIUM_TMC","ПУ Всё по максимуму online","БПК"],[51,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA047PSMAX_TMC","ПУ Всё по максимуму","БПК"],[52,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA047PSMAXB_TMC","ПУ Всё по максимуму","БПК"],[53,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA047PSPREM_TMC","ПУ Всё по максимуму online","БПК"],[54,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA047PSPREMB_TMC","ПУ Всё по максимуму online","БПК"],[55,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027PSBASEBFIB_TMC","ПУ Базовый","БПК"],[56,"Онлайн-открытие банковского счета с выпуском карты","CE","A/C Individual","Текущий счет"],[57,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA052SHINEIB_TMC","Карта Сияй","БПК"],[58,"Онлайн-открытие банковского счета с выпуском карты","B0","Базовый счет","Текущий счет"],[59,"Онлайн-открытие банковского счета с выпуском карты","B3","Базовый счет Пенсионный","Текущий счет"],[60,"Онлайн-открытие банковского счета с выпуском виртуальной карты","CB","A/C Individual","Текущий счет"],[61,"Онлайн-открытие банковского счета с выпуском виртуальной карты","CE","A/C Individual","Текущий счет"],[62,"Онлайн-открытие банковского счета с выпуском виртуальной карты","B0","Базовый счет","Текущий счет"],[63,"Онлайн-открытие банковского счета с выпуском виртуальной карты","B3","Базовый счет Пенсионный","Текущий счет"],[64,"Онлайн-открытие банковского счета с выпуском виртуальной карты","PrvDbAAA027VIRT_TMC","Виртуальная карта","БПК"],[65,"Выпуск банковской платежной карточки онлайн","PrvDbAAA027PSBASEIB_TMC","ПУ Базовый","БПК"],[66,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027PSBASEBFIB_TMC","ПУ Базовый","БПК"],[67,"Онлайн-открытие банковского счета с выпуском карты","PrvDbAAA027PSBASEIB_TMC","ПУ Базовый","БПК"],[68,"Онлайн-открытие ОМС","MF","Обезличенный металлический счет","ОМС"],[71,"Пакеты услуг физических лиц","51","ПУ Базовый","Пакет услуг"]
   ];
-  const initialVariants=()=>[
+const seedKits=()=>[
     {docs:[{id:222,type:"Получение БПК (ФЛ)",subtype:"Заявление на получение личной дебетовой БПК"},{id:223,type:"Получение БПК (ФЛ)",subtype:"Чек, подтверждающий успешное завершение операции (факт приема Банком к исполнению заявления на получение личной дебетовой БПК)"}]},
-    {docs:[{id:224,type:"Открытие счета с выдачей БПК",subtype:"Заявление на открытие ТС и получение личной дебетовой БПК"},{id:225,type:"Получение БПК (ФЛ)",subtype:"Чек, подтверждающий успешное завершение операции"}]}
+    {docs:[{id:224,type:"Открытие счета с выдачей БПК",subtype:"Заявление на открытие ТС и получение личной дебетовой БПК"},{id:225,type:"Открытие счета с выдачей БПК",subtype:"Чек, подтверждающий успешное завершение операции"}]}
   ];
-  let selectedProductId=34,variants=initialVariants(),selectedDoc=null,pendingAction=null,messageTimer=null;
-  const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-  const currentProduct=()=>products.find(p=>p[0]===selectedProductId)||products[0];
-  function renderProducts(){
-    $("productRows").innerHTML=products.map(p=>`<tr class="data-row${p[0]===selectedProductId?" selected":""}" data-product="${p[0]}"><td><span class="checkbox main-checkbox"></span></td><td>${p[0]}</td><td title="${esc(p[1])}">${esc(p[1])}</td><td title="${esc(p[2])}">${esc(p[2])}</td></tr>`).join("");
-    $("productCount").textContent=`Показано ${products.length} записей`;
-    document.querySelectorAll("[data-product]").forEach(row=>row.addEventListener("click",()=>{configurations.set(selectedProductId,JSON.parse(JSON.stringify(variants)));selectedProductId=Number(row.dataset.product);variants=JSON.parse(JSON.stringify(configurations.get(selectedProductId)));selectedDoc=null;renderProducts();renderDetails();renderDocuments();}));
+const documentTypes=[{"type":"Получение БПК (ФЛ)","subtypes":["Заявление на получение личной дебетовой БПК","Чек, подтверждающий успешное завершение операции (факт приема Банком к исполнению заявления на получение личной дебетовой БПК)"]},{"type":"Открытие банковского счета (ФЛ)","subtypes":["Договор на открытие текущего счета"]},{"type":"Открытие счета с выдачей БПК","subtypes":["Заявление на открытие ТС и получение личной дебетовой БПК","Чек, подтверждающий успешное завершение операции"]}];
+const dossiers=["Текущий счет","Вклад (депозит)","БПК","Пакет услуг","ОМС"];
+function createKitModel({seedProducts,seedKits,documentTypes,dossiers,storage,storageKey,readOnly=false}){
+  const clone=value=>JSON.parse(JSON.stringify(value));
+  const hasText=value=>typeof value==="string"&&value.trim().length>0;
+  const assertEdit=()=>{if(readOnly)throw Error("Доступно только для просмотра.");};
+  const allowedPair=(type,subtype)=>documentTypes.some(item=>item.type===type&&item.subtypes.includes(subtype));
+  const seed=seedProducts.map(([id,name,code,description,dossier])=>({id,name,code,description,dossier,kits:seedKits()}));
+  let records=clone(seed),draft=null,isNew=false,dirty=false,previousId=34,startupMessage="";
+  const keyOf=d=>d.subtype;
+  function findDuplicate(kits,subtype,except=null){
+    for(let k=0;k<kits.length;k++)for(let d=0;d<(kits[k].docs||[]).length;d++){
+      if(except&&except.kit===k&&except.doc===d)continue;
+      if(kits[k].docs[d].subtype===subtype)return {kit:k,doc:d};
+    }
+    return null;
   }
-  function renderDetails(){const p=currentProduct();$("detailId").textContent=p[0];$("detailName").textContent=p[1];$("detailDescription").textContent=p[3];$("detailCode").textContent=p[2];$("detailDossier").textContent=p[4];}
-  function renderDocuments(){
-    let html="";variants.forEach((v,vi)=>{
-      if(vi)html+=`<tr class="or-row"><td colspan="5">ИЛИ</td></tr>`;
-      html+=`<tr class="variant-head"><td colspan="5"><span class="variant-label">Комплект ${vi+1}</span><span class="variant-actions"><button class="tiny add-to-variant" data-v="${vi}" type="button">⊕ документ</button><button class="tiny remove-variant" data-v="${vi}" type="button">▥ удалить комплект</button></span></td></tr>`;
-      if(!v.docs.length)html+=`<tr class="empty-row"><td colspan="5">Добавьте хотя бы один документ</td></tr>`;
-      v.docs.forEach((d,di)=>{if(di)html+=`<tr class="logic-row"><td colspan="5"><span class="logic-line">И</span></td></tr>`;const selected=selectedDoc&&selectedDoc.v===vi&&selectedDoc.d===di;html+=`<tr class="data-row${selected?" selected-doc":""}" data-doc-v="${vi}" data-doc-d="${di}"><td><span class="checkbox${selected?" checked":""}"></span></td><td>Комплект ${vi+1}</td><td>${d.id}</td><td title="${esc(d.type)}">${esc(d.type)}</td><td title="${esc(d.subtype)}">${esc(d.subtype)}</td></tr>`;});
-    });
-    if(!variants.length)html=`<tr class="empty-row"><td colspan="5">Комплекты документов не настроены. При добавлении документа будет автоматически создан Комплект 1.</td></tr>`;
-    $("documentRows").innerHTML=html;const count=variants.reduce((n,v)=>n+v.docs.length,0);$("documentCount").textContent=`Комплектов: ${variants.length}. Документов: ${count}`;
-    $("addVariant").disabled=variants.length>=10;
-    document.querySelectorAll("[data-doc-v]").forEach(row=>row.addEventListener("click",()=>{selectedDoc={v:Number(row.dataset.docV),d:Number(row.dataset.docD)};renderDocuments();}));
-    document.querySelectorAll(".add-to-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();openDocument(Number(b.dataset.v));}));
-    document.querySelectorAll(".remove-variant").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();confirmRemoveVariant(Number(b.dataset.v));}));
-    $("deleteSelected").disabled=!selectedDoc;
+  function validateKits(kits,dossier){
+    if(!Array.isArray(kits)||kits.length<1)throw Error("Добавьте комплект и хотя бы один документ.");
+    if(kits.length>10)throw Error("У продукта может быть не больше 10 комплектов.");
+    const pairs=new Map();
+    for(let k=0;k<kits.length;k++){
+      const kit=kits[k];
+      if(!kit||!Array.isArray(kit.docs)||kit.docs.length===0)throw Error("Комплект "+(k+1)+" пуст. Добавьте документ или удалите комплект.");
+      for(const d of kit.docs){
+        if(!d||!hasText(d.type)||!hasText(d.subtype)||!Number.isInteger(d.id)||d.id<1)throw Error("В комплекте "+(k+1)+" не заполнены обязательные поля документа.");
+        if(!allowedPair(d.type,d.subtype))throw Error('В комплекте '+(k+1)+' указан неизвестный вид или подвид документа.');
+        if(!dossiers.includes(d.dossier??dossier))throw Error("В комплекте "+(k+1)+" указан неизвестный вид досье.");
+        const pair=keyOf(d);
+        if(pairs.has(pair))throw Error('Подвид "'+d.subtype+'" уже есть в Комплекте '+(pairs.get(pair)+1)+'.');
+        pairs.set(pair,k);
+      }
+    }
   }
-  function setTab(name){document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));["details","kits","users"].forEach(x=>$(x+"Panel").classList.toggle("hidden",x!==name));}
-  function markDirty(){$("globalSave").disabled=false;}
-  function fillVariantSelect(selected){$("variantSelect").innerHTML=variants.length?variants.map((v,i)=>`<option value="${i}"${i===selected?" selected":""}>Комплект ${i+1}</option>`).join(""):`<option value="0" selected>Комплект 1</option>`;}
-  function clearDocumentErrors(){$("documentType").classList.remove("field-error");$("documentSubtype").classList.remove("field-error");}
-  function hasDuplicateDocuments(){return variants.some(v=>{const seen=new Set();return v.docs.some(d=>{const key=JSON.stringify([d.type,d.subtype]);if(seen.has(key))return true;seen.add(key);return false;});});}
-  function openDocument(v=0){fillVariantSelect(v);clearDocumentErrors();$("documentDialog").showModal();}
-  function confirmRemoveVariant(index){pendingAction=()=>{variants.splice(index,1);selectedDoc=null;renderDocuments();markDirty();notify("Комплект удален","Состав комплектов изменен.");};$("confirmTitle").textContent="Удаление комплекта";$("confirmText").textContent=`Удалить комплект ${index+1} со всеми входящими документами?`;$("confirmDialog").showModal();}
-  function notify(title,text){clearTimeout(messageTimer);$("messageTitle").textContent=title;$("messageText").textContent=text;$("message").classList.remove("hidden");messageTimer=setTimeout(()=>$("message").classList.add("hidden"),4500);}
-  document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setTab(t.dataset.tab)));
-  $("addDocument").addEventListener("click",()=>openDocument(0));
-  $("addVariant").addEventListener("click",()=>{if(variants.length>=10){notify("Комплект не добавлен","Достигнуто максимальное количество комплектов: 10.");return;}variants.push({docs:[]});selectedDoc=null;renderDocuments();markDirty();notify("Комплект добавлен",`Создан комплект ${variants.length}. Добавьте в него полный набор документов.`);});
-  $("deleteSelected").addEventListener("click",()=>{if(!selectedDoc)return;pendingAction=()=>{variants[selectedDoc.v].docs.splice(selectedDoc.d,1);selectedDoc=null;renderDocuments();markDirty();notify("Документ удален","Состав комплекта изменен.");};$("confirmTitle").textContent="Удаление документа";$("confirmText").textContent="Удалить выбранный документ из комплекта?";$("confirmDialog").showModal();});
-  $("documentForm").addEventListener("submit",e=>{e.preventDefault();const v=Number($("variantSelect").value);if(!variants.length)variants.push({docs:[]});const type=$("documentType").value,subtype=$("documentSubtype").value;if(variants[v].docs.some(d=>d.type===type&&d.subtype===subtype)){$("documentType").classList.add("field-error");$("documentSubtype").classList.add("field-error");notify("Документ не добавлен","В выбранном комплекте уже есть документ с такими видом и подвидом.");return;}const nextNumber=Math.max(0,...variants.flatMap(x=>x.docs.map(d=>d.id)))+1;variants[v].docs.push({id:nextNumber,type,subtype});$("documentDialog").close();renderDocuments();markDirty();notify("Документ добавлен",`Документ включен в комплект ${v+1}.`);});
-  $("cancelDocument").addEventListener("click",()=>$("documentDialog").close());$("cancelConfirm").addEventListener("click",()=>{pendingAction=null;$("confirmDialog").close();});$("acceptConfirm").addEventListener("click",()=>{const a=pendingAction;pendingAction=null;$("confirmDialog").close();if(a)a();});
-  $("globalSave").addEventListener("click",()=>{if(variants.some(v=>!v.docs.length)){notify("Настройки не сохранены","Каждый комплект должен содержать хотя бы один документ.");return;}if(hasDuplicateDocuments()){notify("Настройки не сохранены","В одном комплекте не должно быть документов с одинаковыми видом и подвидом.");return;}$("globalSave").disabled=true;notify("Настройки сохранены","Новые и повторные проверки будут использовать текущий порядок комплектов.");});
-  $("refreshAll").addEventListener("click",()=>{variants=initialVariants();selectedDoc=null;renderDocuments();$("globalSave").disabled=true;notify("Данные обновлены","Восстановлен исходный демонстрационный состав.");});$("refreshKits").addEventListener("click",()=>{variants=initialVariants();selectedDoc=null;renderDocuments();$("globalSave").disabled=true;});
-  $("closeMessage").addEventListener("click",()=>$("message").classList.add("hidden"));
-
-  const configurations=new Map(products.map(p=>[p[0],initialVariants()]));
-  function validateConfig(data){
-    if(data?.format!=="gedk-online-products"||data.version!==1||!Array.isArray(data.products))throw Error("Неверный формат файла конфигурации.");
+  function validateProduct(p){
+    if(!p||!Number.isInteger(p.id)||p.id<1)throw Error("Не указан номер продукта.");
+    if(!hasText(p.name))throw Error("Заполните наименование продукта.");
+    if(!hasText(p.code))throw Error("Заполните обозначение продукта.");
+    if(!dossiers.includes(p.dossier))throw Error("Выберите вид досье продукта.");
+    validateKits(p.kits,p.dossier);
+  }
+  function normalize(p){
+    const result=clone(p);
+    result.name=result.name.trim();result.code=result.code.trim();
+    result.description=typeof result.description==="string"?result.description:"";
+    for(const kit of result.kits)for(const d of kit.docs)d.dossier??=result.dossier;
+    return result;
+  }
+  function validateFile(data,targets=records,allowNew=false,allowEmpty=false){
+    if(!data||data.format!=="gedk-online-products"||data.version!==1||!Array.isArray(data.products))throw Error("Неверный формат файла конфигурации.");
+    if(!allowEmpty&&data.products.length===0)throw Error("В файле нет продуктов для импорта.");
     const ids=new Set();
     for(const p of data.products){
-      if(!products.some(x=>x[0]===p.id&&x[2]===p.code)||ids.has(p.id))throw Error("Неизвестный или повторяющийся онлайн-продукт.");ids.add(p.id);
-      if(!Array.isArray(p.kits)||p.kits.length>10)throw Error("Допускается от нуля до десяти комплектов.");
-      for(const kit of p.kits){if(!Array.isArray(kit.docs)||!kit.docs.length)throw Error("Комплект не содержит документов.");const seen=new Set();for(const d of kit.docs){if(typeof d.type!=="string"||!d.type.trim()||typeof d.subtype!=="string"||!d.subtype.trim()||!Number.isInteger(d.id)||d.id<1)throw Error("Не заполнены поля документа.");const key=JSON.stringify([d.type,d.subtype]);if(seen.has(key))throw Error("Документ повторяется внутри комплекта.");seen.add(key);}}
-    }return data;
+      validateProduct(p);
+      if(ids.has(p.id))throw Error("В файле повторяется продукт с номером "+p.id+".");
+      ids.add(p.id);
+      if(!allowNew&&!targets.some(t=>t.id===p.id&&t.code===p.code))throw Error("В справочнике нет продукта "+p.id+" с обозначением "+p.code+".");
+    }
+    return {format:data.format,version:data.version,products:data.products.map(normalize)};
   }
-  $("exportConfig").addEventListener("click",()=>{
-    configurations.set(selectedProductId,JSON.parse(JSON.stringify(variants)));
-    const data={format:"gedk-online-products",version:1,products:products.map(p=>({id:p[0],code:p[2],name:p[1],description:p[3],dossier:p[4],kits:configurations.get(p[0])}))};
-    try{validateConfig(data);}catch(e){notify("Экспорт не выполнен",e.message);return;}
-    const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="online-products-config.json";a.click();URL.revokeObjectURL(url);notify("Конфигурация экспортирована","Файл можно импортировать в другой экземпляр прототипа.");
-  });
-  $("importConfig").addEventListener("click",()=>$("configFile").click());
-  $("configFile").addEventListener("change",async()=>{const file=$("configFile").files?.[0];if(!file)return;try{const data=validateConfig(JSON.parse(await file.text()));pendingAction=()=>{data.products.forEach(p=>configurations.set(p.id,JSON.parse(JSON.stringify(p.kits))));variants=JSON.parse(JSON.stringify(configurations.get(selectedProductId)));selectedDoc=null;renderDocuments();markDirty();notify("Конфигурация импортирована","Настройки продуктов из файла загружены. Нажмите Сохранить.");};$("confirmTitle").textContent="Импорт конфигурации";$("confirmText").textContent="Заменить настройки продуктов, перечисленных в файле?";$("confirmDialog").showModal();}catch(e){notify("Импорт не выполнен",e.message);}finally{$("configFile").value="";}});
-  renderProducts();renderDetails();renderDocuments();setTimeout(()=>{const row=document.querySelector('[data-product="34"]');if(row)row.scrollIntoView({block:"center"});},50);
+  function cleanLegacy(data){
+    if(!data||!Array.isArray(data.products))return {data,removedProducts:0,removedKits:0};
+    const output=clone(data);let removedProducts=0,removedKits=0;
+    output.products=output.products.filter(p=>{
+      if(!p)return true;
+      if(p.kits===undefined||p.kits===null){removedProducts++;return false;}
+      if(!Array.isArray(p.kits))return true;
+      p.kits=p.kits.filter(kit=>{
+        if(kit&&(kit.docs===undefined||kit.docs===null||Array.isArray(kit.docs)&&kit.docs.length===0)){removedKits++;return false;}
+        return true;
+      });
+      if(p.kits.length===0){removedProducts++;return false;}
+      return true;
+    });
+    return {data:output,removedProducts,removedKits};
+  }
+  function persist(next){
+    const payload={format:"gedk-online-products",version:1,products:next};
+    storage.setItem(storageKey,JSON.stringify(payload));
+    records=next;
+  }
+  function loadDraft(id){
+    const p=records.find(r=>r.id===id)||records[0]||null;
+    draft=p?clone(p):null;isNew=false;dirty=false;
+    if(p)previousId=p.id;
+  }
+  try{
+    const raw=storage.getItem(storageKey);
+    if(raw){
+      const cleaned=cleanLegacy(JSON.parse(raw));
+      const data=validateFile(cleaned.data,[],true,true);
+      records=data.products;
+      if(cleaned.removedProducts||cleaned.removedKits){
+        if(!readOnly)storage.setItem(storageKey,JSON.stringify(data));
+        startupMessage="Из демонстрационного справочника удалены пустые комплекты и продукты без комплектов.";
+      }
+    }
+  }catch(e){startupMessage="Не удалось прочитать сохраненные настройки. Показаны исходные демонстрационные данные.";records=clone(seed);}
+  records=records.map(normalize);loadDraft(previousId);
+  function checkDraft(){
+    if(!draft)return "";
+    try{validateProduct(draft);return "";}catch(e){return e.message;}
+  }
+  function select(id,discard=false){
+    if(dirty&&!discard)throw Error("Есть несохраненные изменения.");
+    if(!records.some(r=>r.id===id))throw Error("Продукт не найден.");
+    loadDraft(id);
+  }
+  function startNew(){
+    assertEdit();if(dirty)throw Error("Есть несохраненные изменения.");
+    draft={id:Math.max(0,...records.map(p=>p.id))+1,name:"",code:"",description:"",dossier:"",kits:[]};
+    isNew=true;dirty=true;
+  }
+  function updateProduct(patch){
+    assertEdit();if(!draft||!isNew)throw Error("Карточка нового продукта не открыта.");
+    for(const field of ["name","code","description","dossier"])if(field in patch&&draft[field]!==patch[field]){draft[field]=patch[field];dirty=true;}
+  }
+  function addKit(){
+    assertEdit();if(!draft)throw Error("Выберите продукт.");
+    if(draft.kits.length>=10)throw Error("Достигнуто максимальное количество комплектов: 10.");
+    draft.kits.push({docs:[]});dirty=true;
+  }
+  function putDocument({kit,type,subtype},editing=null){
+    assertEdit();if(!draft)throw Error("Выберите продукт.");
+    if(!hasText(type)||!hasText(subtype))throw Error("Выберите вид и подвид документа.");
+    if(!allowedPair(type,subtype))throw Error("Для выбранного вида этот подвид недоступен.");
+    if(!Number.isInteger(kit)||kit<0||(draft.kits.length?kit>=draft.kits.length:kit!==0))throw Error("Выберите комплект.");
+    const old=editing?draft.kits[editing.kit]?.docs?.[editing.doc]:null;
+    if(editing&&!old)throw Error("Изменяемая строка не найдена.");
+    const duplicate=findDuplicate(draft.kits,subtype,editing);
+    if(duplicate)throw Error('Подвид "'+subtype+'" уже есть в Комплекте '+(duplicate.kit+1)+'.');
+    const nextNumber=old?.id??Math.max(0,...draft.kits.flatMap(k=>k.docs.map(d=>d.id)))+1;
+    const item={...(old?clone(old):{}),id:nextNumber,type,subtype};
+    if(!item.dossier&&draft.dossier)item.dossier=draft.dossier;
+    if(draft.kits.length===0)draft.kits.push({docs:[]});
+    if(editing&&editing.kit===kit)draft.kits[kit].docs[editing.doc]=item;
+    else{if(editing)draft.kits[editing.kit].docs.splice(editing.doc,1);draft.kits[kit].docs.push(item);}
+    dirty=true;return {kit,doc:editing&&editing.kit===kit?editing.doc:draft.kits[kit].docs.length-1};
+  }
+  function removeDocument(ref){
+    assertEdit();if(!draft?.kits[ref.kit]?.docs[ref.doc])throw Error("Выберите документ.");
+    draft.kits[ref.kit].docs.splice(ref.doc,1);dirty=true;
+  }
+  function removeKit(kit){
+    assertEdit();if(!draft||!Number.isInteger(kit)||kit<0||kit>=draft.kits.length)throw Error("Комплект не найден.");
+    draft.kits.splice(kit,1);dirty=true;
+  }
+  function save(){
+    assertEdit();validateProduct(draft);
+    const ready=normalize(draft),next=clone(records);
+    const index=next.findIndex(p=>p.id===ready.id);
+    if(isNew)next.push(ready);else{if(index<0)throw Error("Продукт не найден.");next[index]=ready;}
+    try{persist(next);}catch(e){throw Error("Не удалось сохранить настройку в этом браузере. Прежние данные не изменены.");}
+    loadDraft(ready.id);return ready;
+  }
+  function exportData(){return {format:"gedk-online-products",version:1,products:clone(records)};}
+  function prepareImport(data){assertEdit();return validateFile(data);}
+  function applyImport(data){
+    assertEdit();const ready=validateFile(data),next=clone(records);
+    for(const p of ready.products){const index=next.findIndex(r=>r.id===p.id);next[index]={...next[index],...clone(p)};}
+    try{persist(next);}catch(e){throw Error("Импорт не выполнен. Прежние настройки не изменены.");}
+    loadDraft(draft?.id??previousId);return ready.products.length;
+  }
+  return {select,startNew,updateProduct,addKit,putDocument,removeDocument,removeKit,save,exportData,prepareImport,applyImport,validateKits,validateProduct,cleanLegacy,
+    discard:()=>loadDraft(isNew?previousId:draft?.id),
+    getState:()=>({products:clone(records),draft:draft?clone(draft):null,isNew,dirty,readOnly,validation:checkDraft(),canSave:!!draft&&dirty&&!readOnly&&!checkDraft(),startupMessage})
+  };
+}
+
+  const $=id=>document.getElementById(id);
+  const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const readOnly=new URLSearchParams(window.location.search).get("access")==="view";
+  const storage={getItem:key=>window.localStorage.getItem(key),setItem:(key,value)=>window.localStorage.setItem(key,value)};
+  const model=createKitModel({seedProducts,seedKits,documentTypes,dossiers,storage,storageKey:"gedk-uc89-prototype",readOnly});
+  let selectedDoc=null,editingDoc=null,pendingAction=null,messageTimer=null;
+  function notify(title,text,error=false){
+    clearTimeout(messageTimer);$("messageTitle").textContent=title;$("messageText").textContent=text;
+    $("message").classList.remove("hidden");$("message").classList.toggle("error",error);
+    messageTimer=setTimeout(()=>$("message").classList.add("hidden"),6500);
+  }
+  function showConfirmation(title,text,action){
+    pendingAction=action;$("confirmTitle").textContent=title;$("confirmText").textContent=text;$("confirmDialog").showModal();
+  }
+  function discardThen(action){
+    if(!model.getState().dirty){action();return;}
+    showConfirmation("Несохраненные изменения","Отменить несохраненные изменения и продолжить?",()=>{
+      model.discard();selectedDoc=null;action();
+    });
+  }
+  function renderProducts(){
+    const state=model.getState();
+    $("productRows").innerHTML=state.products.length?state.products.map(p=>'<tr class="data-row'+(p.id===state.draft?.id?' selected':'')+'" data-product="'+p.id+'"><td><span class="checkbox main-checkbox"></span></td><td>'+p.id+'</td><td title="'+esc(p.name)+'">'+esc(p.name)+'</td><td title="'+esc(p.code)+'">'+esc(p.code)+'</td></tr>').join(""):'<tr class="empty-row"><td colspan="4">Добавьте продукт с заполненным комплектом документов</td></tr>';
+    $("productCount").textContent="Показано "+state.products.length+" записей";
+    document.querySelectorAll("[data-product]").forEach(row=>row.addEventListener("click",()=>{
+      const id=Number(row.dataset.product);if(id===model.getState().draft?.id)return;
+      discardThen(()=>{model.select(id);selectedDoc=null;renderAll();});
+    }));
+  }
+  function renderDetails(){
+    const state=model.getState(),p=state.draft;
+    $("productDetails").classList.toggle("hidden",state.isNew);$("newProductForm").classList.toggle("hidden",!state.isNew);
+    for(const [id,field] of [["detailId","id"],["detailName","name"],["detailDescription","description"],["detailCode","code"],["detailDossier","dossier"]])$(id).textContent=p?.[field]??"—";
+    if(state.isNew){
+      $("newProductId").textContent=p.id;
+      for(const [id,field] of [["newProductName","name"],["newProductCode","code"],["newProductDescription","description"],["newProductDossier","dossier"]])$(id).value=p[field];
+    }
+    $("draftLabel").textContent=state.isNew?"Новый продукт — не сохранен":state.readOnly?"Только просмотр":"";
+    $("draftLabel").classList.toggle("hidden",!$("draftLabel").textContent);
+  }
+  function renderDocuments(){
+    const state=model.getState(),kits=state.draft?.kits||[];
+    let html="";
+    kits.forEach((kit,k)=>{
+      if(k)html+='<tr class="or-row"><td colspan="5">ИЛИ</td></tr>';
+      html+='<tr class="variant-head"><td colspan="5"><span class="variant-label">Комплект '+(k+1)+'</span><span class="variant-actions"><button class="tiny add-to-variant" data-v="'+k+'" type="button"'+(state.readOnly?' disabled':'')+'>⊕ документ</button><button class="tiny remove-variant" data-v="'+k+'" type="button"'+(state.readOnly?' disabled':'')+'>▥ удалить комплект</button></span></td></tr>';
+      if(!kit.docs.length)html+='<tr class="empty-row"><td colspan="5">Добавьте хотя бы один документ. Пустой комплект нельзя сохранить.</td></tr>';
+      kit.docs.forEach((d,di)=>{
+        if(di)html+='<tr class="logic-row"><td colspan="5"><span class="logic-line">И</span></td></tr>';
+        const selected=selectedDoc&&selectedDoc.kit===k&&selectedDoc.doc===di;
+        html+='<tr class="data-row'+(selected?' selected-doc':'')+'" data-doc-v="'+k+'" data-doc-d="'+di+'"><td><span class="checkbox'+(selected?' checked':'')+'"></span></td><td>Комплект '+(k+1)+'</td><td>'+d.id+'</td><td title="'+esc(d.type)+'">'+esc(d.type)+'</td><td title="'+esc(d.subtype)+'">'+esc(d.subtype)+'</td></tr>';
+      });
+    });
+    if(!kits.length)html='<tr class="empty-row"><td colspan="5">'+(state.draft?'Добавьте комплект и хотя бы один документ':'Выберите продукт или добавьте новый')+'</td></tr>';
+    $("documentRows").innerHTML=html;
+    $("documentCount").textContent="Комплектов: "+kits.length+". Документов: "+kits.reduce((n,k)=>n+k.docs.length,0);
+    $("kitLimit").textContent=kits.length===10?"Достигнут лимит: 10 комплектов":"Порядок комплектов определяется автоматически";
+    document.querySelectorAll("[data-doc-v]").forEach(row=>row.addEventListener("click",()=>{
+      selectedDoc={kit:Number(row.dataset.docV),doc:Number(row.dataset.docD)};renderDocuments();renderControls();
+    }));
+    document.querySelectorAll(".add-to-variant").forEach(b=>b.addEventListener("click",()=>openDocument(Number(b.dataset.v))));
+    document.querySelectorAll(".remove-variant").forEach(b=>b.addEventListener("click",()=>removeKit(Number(b.dataset.v))));
+  }
+  function renderControls(){
+    const state=model.getState(),active=!!state.draft,canEdit=active&&!state.readOnly;
+    $("globalSave").disabled=!state.canSave;$("discardChanges").disabled=!state.dirty;
+    $("addProduct").disabled=state.readOnly;$("importConfig").disabled=state.readOnly;
+    $("addDocument").disabled=!canEdit;$("addVariant").disabled=!canEdit||state.draft.kits.length>=10;
+    $("addVariant").title=state.draft?.kits.length>=10?"Достигнуто максимальное количество комплектов: 10.":"Добавить рабочий комплект";
+    $("deleteSelected").disabled=!canEdit||!selectedDoc;$("editDocument").disabled=!canEdit||!selectedDoc;
+    $("saveFeedback").classList.toggle("hidden",!state.dirty);
+    $("saveFeedback").classList.toggle("invalid",!!state.validation);
+    $("saveFeedback").textContent=state.validation?"Не сохранено. "+state.validation:state.dirty?"Есть несохраненные изменения. Нажмите «Сохранить».":"";
+  }
+  function renderAll(){renderProducts();renderDetails();renderDocuments();renderControls();}
+  function setTab(name){
+    document.querySelectorAll(".tab").forEach(t=>{t.classList.toggle("active",t.dataset.tab===name);t.setAttribute("aria-selected",String(t.dataset.tab===name));});
+    ["details","kits","users"].forEach(x=>$(x+"Panel").classList.toggle("hidden",x!==name));
+  }
+  function clearDocumentErrors(){
+    ["documentType","documentSubtype"].forEach(id=>{$(id).classList.remove("field-error");$(id).setAttribute("aria-invalid","false");});
+    $("documentError").classList.add("hidden");$("documentError").textContent="";
+  }
+  function fillSubtypes(value=""){
+    const type=documentTypes.find(t=>t.type===$("documentType").value);
+    $("documentSubtype").innerHTML='<option value="">Выберите подвид документа</option>'+(type?type.subtypes.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join(""):"");
+    $("documentSubtype").disabled=!type;$("documentSubtype").value=value;
+  }
+  function openDocument(kit=0,edit=false){
+    const state=model.getState();if(state.readOnly||!state.draft)return;
+    editingDoc=edit&&selectedDoc?{...selectedDoc}:null;
+    const existing=editingDoc?state.draft.kits[editingDoc.kit]?.docs[editingDoc.doc]:null;
+    if(editingDoc&&!existing)return;
+    $("variantSelect").innerHTML=state.draft.kits.length?state.draft.kits.map((k,i)=>'<option value="'+i+'">Комплект '+(i+1)+'</option>').join(""):'<option value="0">Комплект 1</option>';
+    $("variantSelect").value=String(editingDoc?.kit??kit);
+    $("documentType").innerHTML='<option value="">Выберите вид документа</option>'+documentTypes.map(t=>'<option value="'+esc(t.type)+'">'+esc(t.type)+'</option>').join("");
+    $("documentType").value=existing?.type??"";fillSubtypes(existing?.subtype??"");
+    $("documentDialogTitle").textContent=editingDoc?"Изменение документа в комплекте":"Добавление документа в комплект";
+    $("documentSubmit").textContent=editingDoc?"Сохранить":"Добавить";
+    clearDocumentErrors();$("documentDialog").showModal();$("documentType").focus();
+  }
+  function removeKit(index){
+    if(model.getState().readOnly)return;
+    const count=model.getState().draft.kits.length;
+    const warning=count===1?" После удаления единственного комплекта нужно добавить новый заполненный комплект. Сохранить продукт без комплектов нельзя.":"";
+    showConfirmation("Удаление комплекта","Удалить Комплект "+(index+1)+" со всеми строками документов?"+warning,()=>{
+      model.removeKit(index);selectedDoc=null;renderAll();notify("Комплект удален","Изменен рабочий состав. Для применения нажмите «Сохранить».");
+    });
+  }
+  function boot(){
+    $("newProductDossier").innerHTML='<option value="">Выберите вид досье</option>'+dossiers.map(d=>'<option value="'+esc(d)+'">'+esc(d)+'</option>').join("");
+    document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setTab(t.dataset.tab)));
+    $("addProduct").addEventListener("click",()=>discardThen(()=>{model.startNew();selectedDoc=null;renderAll();setTab("details");$("newProductName").focus();}));
+    $("addDocument").addEventListener("click",()=>openDocument(0));
+    $("editDocument").addEventListener("click",()=>{if(selectedDoc)openDocument(selectedDoc.kit,true);});
+    $("addVariant").addEventListener("click",()=>{try{model.addKit();selectedDoc=null;renderAll();notify("Комплект добавлен","Добавьте в него хотя бы один документ. Пустой комплект нельзя сохранить.");}catch(e){notify("Комплект не добавлен",e.message,true);}});
+    $("deleteSelected").addEventListener("click",()=>{
+      if(!selectedDoc||model.getState().readOnly)return;
+      const ref={...selectedDoc};showConfirmation("Удаление документа","Удалить выбранную строку из комплекта? Удаление настройки не удаляет документ клиента.",()=>{
+        model.removeDocument(ref);selectedDoc=null;renderAll();notify("Документ удален из настройки","Пустой комплект нужно заполнить или удалить перед сохранением.");
+      });
+    });
+    $("documentType").addEventListener("change",()=>{fillSubtypes();clearDocumentErrors();});
+    $("documentSubtype").addEventListener("change",clearDocumentErrors);
+    $("documentForm").addEventListener("submit",e=>{
+      e.preventDefault();clearDocumentErrors();
+      const type=$("documentType").value,subtype=$("documentSubtype").value;
+      try{
+        const ref=model.putDocument({kit:Number($("variantSelect").value),type,subtype},editingDoc);
+        const edited=!!editingDoc;selectedDoc=ref;$("documentDialog").close();renderAll();
+        notify(edited?"Документ изменен":"Документ добавлен","Для применения настройки нажмите «Сохранить».");
+      }catch(error){
+        ["documentType","documentSubtype"].forEach(id=>{if(!$(id).value||type&&subtype){$(id).classList.add("field-error");$(id).setAttribute("aria-invalid","true");}});
+        $("documentError").textContent=error.message;$("documentError").classList.remove("hidden");
+      }
+    });
+    $("cancelDocument").addEventListener("click",()=>$("documentDialog").close());
+    $("documentDialog").addEventListener("close",()=>{editingDoc=null;clearDocumentErrors();});
+    $("cancelConfirm").addEventListener("click",()=>{pendingAction=null;$("confirmDialog").close();});
+    $("confirmDialog").addEventListener("cancel",()=>{pendingAction=null;});
+    $("acceptConfirm").addEventListener("click",()=>{
+      const action=pendingAction;pendingAction=null;$("confirmDialog").close();
+      try{if(action)action();}catch(e){notify("Изменения не применены",e.message,true);renderControls();}
+    });
+    for(const [id,field,event] of [["newProductName","name","input"],["newProductCode","code","input"],["newProductDescription","description","input"],["newProductDossier","dossier","change"]]){
+      $(id).addEventListener(event,()=>{model.updateProduct({[field]:$(id).value});renderControls();});
+    }
+    $("newProductForm").addEventListener("submit",e=>e.preventDefault());
+    $("globalSave").addEventListener("click",()=>{
+      try{const wasNew=model.getState().isNew;model.save();selectedDoc=null;renderAll();notify(wasNew?"Продукт создан":"Настройка сохранена","Следующие проверки будут использовать сохраненные комплекты.");}
+      catch(e){notify("Настройка не сохранена",e.message,true);renderControls();}
+    });
+    const discard=()=>{model.discard();selectedDoc=null;renderAll();notify("Данные обновлены","Несохраненные изменения отменены. Загружена сохраненная настройка.");};
+    $("discardChanges").addEventListener("click",discard);$("refreshAll").addEventListener("click",discard);$("refreshKits").addEventListener("click",discard);
+    $("closeMessage").addEventListener("click",()=>$("message").classList.add("hidden"));
+    $("exportConfig").addEventListener("click",()=>{
+      try{
+        const data=model.exportData(),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));
+        const a=document.createElement("a");a.href=url;a.download="online-products-config.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);
+        notify("Конфигурация экспортирована",model.getState().dirty?"В файл включена сохраненная настройка. Рабочие изменения в файл не включены.":"В файл включены сохраненные настройки продуктов.");
+      }catch(e){notify("Экспорт не выполнен",e.message,true);}
+    });
+    $("importConfig").addEventListener("click",()=>{if(!model.getState().readOnly)$("configFile").click();});
+    $("configFile").addEventListener("change",async()=>{
+      const file=$("configFile").files?.[0];if(!file)return;
+      try{
+        const data=model.prepareImport(JSON.parse(await file.text()));
+        const names=data.products.slice(0,4).map(p=>p.id+" — "+p.name).join("; ");
+        const more=data.products.length>4?"; и еще "+(data.products.length-4):"";
+        const warning=model.getState().dirty?" Несохраненные изменения будут отменены.":"";
+        showConfirmation("Импорт конфигурации","Заменить сохраненные настройки "+data.products.length+" продуктов? "+names+more+"."+warning,()=>{
+          const count=model.applyImport(data);selectedDoc=null;renderAll();notify("Конфигурация импортирована","Сохранены настройки продуктов: "+count+".");
+        });
+      }catch(e){notify("Импорт не выполнен",e.message,true);}
+      finally{$("configFile").value="";}
+    });
+    renderAll();setTab("kits");
+    if(model.getState().startupMessage)notify("Загрузка настроек",model.getState().startupMessage);
+    setTimeout(()=>{const row=document.querySelector('[data-product="'+model.getState().draft?.id+'"]');if(row)row.scrollIntoView({block:"center"});},50);
+  }
+  boot();
+
 })();
 </script>
 </body>
